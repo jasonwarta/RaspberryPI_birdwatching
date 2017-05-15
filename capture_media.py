@@ -8,6 +8,7 @@ import MySQLdb as mdb
 from picamera import PiCamera
 from time import sleep
 import datetime
+from fractions import Fraction
 
 databaseUsername="root"
 databasePassword="password"
@@ -58,6 +59,7 @@ def captureMedia():
 
                         #take vid
                         camera.resolution = (1280, 720)
+                        camera.framerate = 25
                         vid_fname = vid_path+str(datetime.datetime.now())+"_vid.h264"
                         camera.start_recording(vid_fname)
                         camera.wait_recording(60)
@@ -65,5 +67,13 @@ def captureMedia():
                         saveVidToDB(vid_fname)
                 else: 
                         # sleep for 5 minutes
+                        camera = PiCamera(
+                                resolution=(1280, 720),
+                                framerate=Fraction(1, 6),
+                                sensor_mode=3)
+                        camera.shutter_speed = 6000000
+                        camera.iso = 800
+                        sleep(30)
+                        camera.exposure_mode = 'off'
                         sleep(300)
 captureMedia()

@@ -11,4 +11,7 @@
 @reboot nohup /usr/bin/python /root/capture_media.py
 
 # repackage movies into mp4 on a regular basis
-*/10 * * * * /root/conv_vids.sh
+*/5 4-22 * * * /root/conv_vids.sh
+
+# take low light pics every 5 minutes on the off times
+#*/5 0-4,22-23 * * * /usr/bin/python /root/low_light_pic.py
